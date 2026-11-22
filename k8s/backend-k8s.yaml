@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aura-backend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aura_backend
+  template:
+    metadata:
+      labels:
+        app: aura_backend
+    spec:
+      containers:
+        - name: aura-backend
+          image: aurafit-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5001
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "5001"
+            - name: DATABASE_URL
+              value: "postgres://aurafit_user:aurafit_password@aura-db-service:5432/aurafit_db"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aura-backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: aura_backend
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001

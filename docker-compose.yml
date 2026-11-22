@@ -1,0 +1,40 @@
+###version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: aura_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: AurafitDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: aura_backend
+    restart: always
+    ports:
+      - 5001:5001
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+      - DATABASE_URL=postgres://aurafit_user:aurafit_password@db:5432/aurafit_db
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: aura_frontend
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+      
+volumes:
+   postgres_data:

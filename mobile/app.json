@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "DripVibe",
+    "slug": "dripvibe",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#0f0f0f"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dripvibe.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "DripVibe uses your camera to capture clothing photos for style matching.",
+        "NSPhotoLibraryUsageDescription": "DripVibe accesses your photos to add clothing items to your wardrobe."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0f0f0f"
+      },
+      "package": "com.dripvibe.app",
+      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
+    },
+    "plugins": [
+      ["expo-camera", { "cameraPermission": "Allow DripVibe to access your camera." }],
+      ["expo-image-picker", { "photosPermission": "Allow DripVibe to access your photos." }]
+    ]
+  }
+}
