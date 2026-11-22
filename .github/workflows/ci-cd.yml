@@ -47,25 +47,21 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
+      
       - name: Build and push backend image
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v5
         with:
           context: ./backend
-          file: ./backend/Dockerfile
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/aurafit-backend:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/aurafit-backend:${{ github.sha }}
-      
+            ghcr.io/macxolelouzar/aurafit-backend:latest
+            ghcr.io/macxolelouzar/aurafit-backend:${{ github.sha }}
+
       - name: Build and push frontend image
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
-          file: ./frontend/Dockerfile
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/aurafit-frontend:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/aurafit-frontend:${{ github.sha }}
+            ghcr.io/macxolelouzar/aurafit-frontend:latest
+            ghcr.io/macxolelouzar/aurafit-frontend:${{ github.sha }}
